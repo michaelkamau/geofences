@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,6 +39,12 @@ class GeofenceDaoTest {
   }
 
   @Test
+  fun getZeroGeofence() = runBlocking {
+    val res = geofenceDao.getAll().first()
+    assertTrue("result should be empty list",res.isEmpty())
+  }
+
+  @Test
   fun insertAndGetSingleGeofence() = runBlocking {
     val geo = Geofence(
       1,
@@ -52,6 +58,6 @@ class GeofenceDaoTest {
 
     geofenceDao.insertAll(geo)
     val geoRes =  geofenceDao.getAll().first()
-    assertEquals(geoRes[0], geo)
+    assertEquals("result should be equal to $geo ", geoRes[0], geo)
   }
 }
