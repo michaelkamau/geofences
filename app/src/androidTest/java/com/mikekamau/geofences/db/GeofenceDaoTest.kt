@@ -11,8 +11,8 @@ import com.mikekamau.geofences.models.Geofence
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
-import org.junit.Assert
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,6 +20,7 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class GeofenceDaoTest {
+
   private lateinit var geofenceDao: GeofenceDao
   private lateinit var db: GeofenceDatabase
 
@@ -41,7 +42,7 @@ class GeofenceDaoTest {
   @Test
   fun getZeroGeofence() = runBlocking {
     val res = geofenceDao.getAll().first()
-    assertTrue("result should be empty list",res.isEmpty())
+    assertTrue("result should be empty list", res.isEmpty())
   }
 
   @Test
@@ -57,7 +58,35 @@ class GeofenceDaoTest {
     )
 
     geofenceDao.insertAll(geo)
-    val geoRes =  geofenceDao.getAll().first()
+    val geoRes = geofenceDao.getAll().first()
     assertEquals("result should be equal to $geo ", geoRes[0], geo)
+  }
+
+  @Test
+  fun insertAndGetMultipleGeofences() = runBlocking {
+    val geo1 = Geofence(
+      1,
+      GeoPoint(1.2921, 36.8219),
+      1631957150427,
+      1631957150427,
+      "enter",
+      "location1",
+      "Shopping Mall"
+    )
+
+    val geo2 = Geofence(
+      2,
+      GeoPoint(1.2921, 36.8219),
+      1631957150427,
+      1631957150427,
+      "exit",
+      "location1",
+      "Shopping Mall"
+    )
+
+    geofenceDao.insertAll(geo1, geo2)
+    val geoRes = geofenceDao.getAll().first()
+    assertEquals(geoRes[0], geo1)
+    assertEquals(geoRes[1], geo2)
   }
 }

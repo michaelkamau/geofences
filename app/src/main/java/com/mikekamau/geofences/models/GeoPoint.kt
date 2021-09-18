@@ -1,6 +1,6 @@
 package com.mikekamau.geofences.models
 
 data class GeoPoint(
-  val lat: Double,
-  val lng: Double
+  var lat: Double,
+  var lng: Double
 )

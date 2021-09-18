@@ -12,6 +12,6 @@ interface GeofenceDao {
   @Insert
   suspend fun insertAll(vararg geofences: Geofence)
 
-  @Query("SELECT * FROM Geofence")
+  @Query("SELECT * FROM Geofence ORDER BY id")
   fun getAll(): Flow<List<Geofence>>
 }

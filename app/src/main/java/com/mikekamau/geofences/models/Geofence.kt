@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey
 @Entity
 data class Geofence(
   @PrimaryKey
-  val id: Int,
+  var id: Int,
   /* geopoint fields are added to the Geofence table*/
   @Embedded
-  val geoPoint: GeoPoint,
-  val locationTimestamp: Long,
-  val geoPointCaptureTimestamp: Long,
-  val transitionName: String,
-  val locationId: String,
-  val name: String
+  var geoPoint: GeoPoint,
+  var locationTimestamp: Long,
+  var geoPointCaptureTimestamp: Long,
+  var transitionName: String,
+  var locationId: String,
+  var name: String
 )
