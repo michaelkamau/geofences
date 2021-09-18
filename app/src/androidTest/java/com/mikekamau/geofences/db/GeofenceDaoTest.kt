@@ -89,4 +89,25 @@ class GeofenceDaoTest {
     assertEquals(geoRes[0], geo1)
     assertEquals(geoRes[1], geo2)
   }
+
+  @Test
+  fun insertAndDeleteGeofence() = runBlocking {
+    val geo = Geofence(
+      1,
+      GeoPoint(1.2921, 36.8219),
+      1631957150427,
+      1631957150427,
+      "enter",
+      "location1",
+      "Shopping Mall"
+    )
+
+    geofenceDao.insertAll(geo)
+    val rowsDeleted = geofenceDao.delete(geo)
+
+    assertEquals("rows deleted should be 1", rowsDeleted, 1)
+
+    val res = geofenceDao.getAll().first()
+    assertTrue("database should be empty", res.isEmpty())
+  }
 }
