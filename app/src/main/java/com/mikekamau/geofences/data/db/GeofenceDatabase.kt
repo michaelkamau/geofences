@@ -1,4 +1,4 @@
-package com.mikekamau.geofences.db
+package com.mikekamau.geofences.data.db
 
 import android.content.Context
 import androidx.room.Database
