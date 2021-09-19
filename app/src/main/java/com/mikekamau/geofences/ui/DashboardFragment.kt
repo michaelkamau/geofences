@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.mikekamau.geofences.GeofencesApplication
+import com.mikekamau.geofences.R
 import com.mikekamau.geofences.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -31,9 +33,27 @@ class DashboardFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+
+    geofencesViewModel.allGeoFences.observe(viewLifecycleOwner) { geofences ->
+      if (geofences.isEmpty()) {
+        binding.tvWarningNoGeofence.visibility = View.VISIBLE
+      } else {
+        binding.tvWarningNoGeofence.visibility = View.GONE
+      }
+    }
+
+    binding.btnAddGeofence.setOnClickListener {
+      navigateToMaps()
+    }
+  }
+
+  fun navigateToMaps() {
+    findNavController().navigate(R.id.dest_maps, null)
   }
 
   companion object {
+
+    private val TAG = DashboardFragment.javaClass.simpleName
 
     @JvmStatic
     fun newInstance() = DashboardFragment()

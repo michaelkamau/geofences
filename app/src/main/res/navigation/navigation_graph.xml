@@ -9,6 +9,18 @@
     android:id="@+id/dest_dashboard"
     android:name="com.mikekamau.geofences.ui.DashboardFragment"
     android:label="@string/label_dashboard"
-    tools:layout="@layout/fragment_dashboard"
-    />
+    tools:layout="@layout/fragment_dashboard">
+
+    <action
+      android:id="@+id/action_dest_dashboard_to_dest_maps"
+      app:destination="@id/dest_maps" />
+
+  </fragment>
+
+  <fragment
+    android:id="@+id/dest_maps"
+    android:name="com.mikekamau.geofences.ui.MapsFragment"
+    android:label="fragment_maps"
+    tools:layout="@layout/fragment_maps" />
+
 </navigation>

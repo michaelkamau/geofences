@@ -29,6 +29,7 @@
       android:textSize="@dimen/text_size_xlarge" />
 
     <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/tv_warning_no_geofence"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/spacing_medium"
@@ -42,11 +43,13 @@
       tools:visibility="visible" />
 
     <com.google.android.material.button.MaterialButton
+      android:id="@+id/btn_add_geofence"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/spacing_medium"
       android:layout_alignParentBottom="true"
-      android:text="@string/label_add_geofence" />
+      android:text="@string/label_add_geofence"
+      />
 
   </RelativeLayout>
 
