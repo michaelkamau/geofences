@@ -12,4 +12,18 @@ class GeofencesApplication : Application() {
 
   val db by lazy { GeofenceDatabase.getInstance(this) }
   val repository by lazy { GeofenceRepository(db.geofenceDao()) }
+
+  override fun onCreate() {
+    super.onCreate()
+    INSTANCE = this
+  }
+
+  companion object {
+
+    private lateinit var INSTANCE: GeofencesApplication
+
+    fun getInstance(): GeofencesApplication {
+      return INSTANCE
+    }
+  }
 }

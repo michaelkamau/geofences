@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.mikekamau.geofences.GeofencesApplication
 import com.mikekamau.geofences.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
 
-  val geofencesViewModel: GeofenceViewModel by activityViewModels()
+  val geofencesViewModel: GeofenceViewModel by activityViewModels {
+    GeofenceViewModelFactory(GeofencesApplication.getInstance().repository)
+  }
+
   lateinit var binding: FragmentDashboardBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {

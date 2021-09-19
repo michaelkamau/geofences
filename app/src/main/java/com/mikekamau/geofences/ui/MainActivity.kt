@@ -8,8 +8,8 @@ import com.mikekamau.geofences.R
 
 class MainActivity : AppCompatActivity() {
 
-  val geofenceViewModel: GeofenceViewModel by viewModels {
-    GeofenceViewModelFactory((application as GeofencesApplication).repository)
+  val geofencesViewModel: GeofenceViewModel by viewModels {
+    GeofenceViewModelFactory(GeofencesApplication.getInstance().repository)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
