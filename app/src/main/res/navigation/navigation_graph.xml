@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/navigation_graph">
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/navigation_graph"
+  app:startDestination="@id/dest_dashboard">
 
+  <fragment
+    android:id="@+id/dest_dashboard"
+    android:name="com.mikekamau.geofences.ui.DashboardFragment"
+    android:label="@string/label_dashboard"
+    tools:layout="@layout/fragment_dashboard"
+    />
 </navigation>

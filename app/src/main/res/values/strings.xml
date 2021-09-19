@@ -1,3 +1,11 @@
 <resources>
   <string name="app_name">Geofences</string>
+
+<!--  Labels-->
+  <string name="label_dashboard">Dashboard</string>
+  <string name="label_add_geofence">Add a Geofence</string>
+
+<!--  Errors and Warnings-->
+  <string name="warning_no_geofences">You currently don\'t have geofences being monitored</string>
+
 </resources>
