@@ -11,10 +11,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.mikekamau.geofences.R
+import com.mikekamau.geofences.databinding.FragmentMapsBinding
 
 class MapsFragment : Fragment() {
 
-  private val callback = OnMapReadyCallback { googleMap ->
+  lateinit var binding: FragmentMapsBinding
+  private val onMapReadyCallback = OnMapReadyCallback { googleMap ->
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -24,9 +26,18 @@ class MapsFragment : Fragment() {
      * install it inside the SupportMapFragment. This method will only be triggered once the
      * user has installed Google Play services and returned to the app.
      */
-    val sydney = LatLng(-34.0, 151.0)
-    googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-    googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+    // update UI settings
+    with(googleMap.uiSettings) {
+      isCompassEnabled = true
+    }
+
+    val home = LatLng(-1.2811374954430768, 36.66097762870249)
+    googleMap.addMarker(MarkerOptions().position(home).title("Home"))
+    googleMap.animateCamera(
+      CameraUpdateFactory.newLatLngZoom(home, 17.5f),
+      500, null
+    )
   }
 
   override fun onCreateView(
@@ -34,12 +45,18 @@ class MapsFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.fragment_maps, container, false)
+    binding = FragmentMapsBinding.inflate(inflater, container, false)
+    return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-    mapFragment?.getMapAsync(callback)
+    mapFragment?.getMapAsync(onMapReadyCallback)
+
+    binding.btnContinue.setOnClickListener {
+      AddGeofenceFragment.newInstance().show(childFragmentManager, AddGeofenceFragment.TAG)
+    }
+
   }
 }
