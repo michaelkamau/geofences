@@ -8,5 +8,6 @@
 
 <!--  Errors and Warnings-->
   <string name="warning_no_geofences">You currently don\'t have geofences being monitored</string>
+  <string name="label_continue">Continue</string>
 
 </resources>

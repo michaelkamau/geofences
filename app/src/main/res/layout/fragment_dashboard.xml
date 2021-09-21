@@ -26,6 +26,7 @@
       android:layout_marginStart="@dimen/spacing_medium"
       android:layout_marginEnd="@dimen/spacing_medium"
       android:text="@string/app_name"
+      android:textColor="@color/elephant"
       android:textSize="@dimen/text_size_xlarge" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -34,11 +35,12 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/spacing_medium"
       android:layout_marginBottom="@dimen/spacing_medium"
-      android:layout_marginStart="@dimen/spacing_medium"
-      android:layout_marginEnd="@dimen/spacing_medium"
+      android:layout_marginStart="@dimen/spacing_xxlarge"
+      android:layout_marginEnd="@dimen/spacing_xxlarge"
       android:layout_centerInParent="true"
       android:text="@string/warning_no_geofences"
       android:textAlignment="center"
+      android:textColor="@color/elephant"
       android:textSize="@dimen/text_size_large"
       tools:visibility="visible" />
 
@@ -47,8 +49,11 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/spacing_medium"
+      android:layout_marginBottom="@dimen/spacing_medium"
       android:layout_alignParentBottom="true"
-      android:text="@string/label_add_geofence" />
+      android:text="@string/label_add_geofence"
+      android:textSize="@dimen/text_size_medium"
+      android:textAllCaps="false"/>
 
   </RelativeLayout>
 
