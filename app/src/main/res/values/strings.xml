@@ -4,6 +4,7 @@
 <!--  Labels-->
   <string name="label_dashboard">Dashboard</string>
   <string name="label_add_geofence">Add a Geofence</string>
+  <string name="label_permission_request">This application needs access to your location in order to enable you create and monitor your geofences.\nPlease accept the permissions request when prompted.</string>
 
 <!--  Errors and Warnings-->
   <string name="warning_no_geofences">You currently don\'t have geofences being monitored</string>
