@@ -2,18 +2,18 @@ package com.mikekamau.geofences.ui
 
 import androidx.lifecycle.*
 import com.mikekamau.geofences.data.GeofenceRepository
-import com.mikekamau.geofences.models.Geofence
+import com.mikekamau.geofences.models.GeofenceModel
 import kotlinx.coroutines.launch
 
 class GeofenceViewModel(
   private val repository: GeofenceRepository
 ) : ViewModel() {
 
-  fun insert(geoFence: Geofence) = viewModelScope.launch {
+  fun insert(geoFence: GeofenceModel) = viewModelScope.launch {
     repository.insert(geoFence)
   }
 
-  val allGeoFences: LiveData<List<Geofence>> = repository.allGeofences.asLiveData()
+  val allGeoFences: LiveData<List<GeofenceModel>> = repository.allGeofences.asLiveData()
 }
 
 class GeofenceViewModelFactory(

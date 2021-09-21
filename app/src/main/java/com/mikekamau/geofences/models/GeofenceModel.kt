@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Geofence(
+data class GeofenceModel(
   @PrimaryKey
   var id: Int,
   /* geopoint fields are added to the Geofence table*/
