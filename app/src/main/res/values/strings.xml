@@ -5,12 +5,7 @@
   <string name="label_dashboard">Dashboard</string>
   <string name="label_add_geofence">Add a Geofence</string>
   <string name="label_permission_request">This application needs access to your location in order to enable you create and monitor your geofences.\nPlease accept the permissions request when prompted.</string>
-
-  <!--  Errors and Warnings-->
-  <string name="warning_no_geofences">You currently don\'t have geofences being monitored</string>
   <string name="label_continue">Continue</string>
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="label_enter_geofence_name">Enter geofence name</string>
   <string name="label_enter_geofence_radius">Enter geofence radius</string>
   <string name="label_enter">Enter</string>
@@ -22,5 +17,13 @@
   <string name="label_radius">Radius</string>
   <string name="label_initial_geofence_events">Initial Geofence Events</string>
   <string name="label_geofence_events">Geofence Events</string>
+
+  <!--  Errors and Warnings-->
+  <string name="warning_no_geofences">You currently don\'t have geofences being monitored</string>
+
+  <!-- Permissions -->
+  <string name="permission_rationale_location">This application requires access to your location services to work</string>
+  <string name="location_permission_denied">This application requires access to your location services to work. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings</string>
+  <string name="permission_required_toast">Location permission is require</string>
 
 </resources>
