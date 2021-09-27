@@ -1,10 +1,13 @@
 package com.mikekamau.geofences.ui
 
 import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableDouble
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableFloat
 import androidx.lifecycle.*
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.maps.model.LatLng
 import com.mikekamau.geofences.data.GeofenceRepository
+import com.mikekamau.geofences.data.GeofenceUtils
 import com.mikekamau.geofences.models.GeofenceModel
 import kotlinx.coroutines.launch
 
@@ -21,7 +24,7 @@ class GeofenceViewModel(
   //================
   // Geofence Radius
   //================
-  private val radius: ObservableDouble = ObservableDouble()
+  private val radius: ObservableFloat = ObservableFloat()
   val errorInRadius = ObservableBoolean()
 
   //=========================
@@ -30,7 +33,7 @@ class GeofenceViewModel(
   val initialEventEnter = ObservableBoolean()
   val initialEventExit = ObservableBoolean()
   val initialEventDwell = ObservableBoolean()
-  val errorInInitialEvent = ObservableBoolean()
+  val errorInInitialEvent = ObservableBoolean(false)
 
   //================
   // Geofence Events
@@ -39,6 +42,13 @@ class GeofenceViewModel(
   val eventExit = ObservableBoolean()
   val eventDwell = ObservableBoolean()
   val errorInEvent = ObservableBoolean()
+  var initialTransitionTrigger: Int? = null
+
+  //================
+  // Geofence Fields
+  //================
+  var selectedPosition: LatLng? = null
+
 
   fun setName(geofenceName: String?) = when {
     geofenceName.isNullOrBlank() -> {
@@ -56,7 +66,7 @@ class GeofenceViewModel(
       return
     } else {
       try {
-        val rad = value.toDouble()
+        val rad = value.toFloat()
         when {
           rad <= 0.0 -> {
             errorInRadius.set(true)
@@ -77,6 +87,45 @@ class GeofenceViewModel(
 
   fun insert(geoFence: GeofenceModel) = viewModelScope.launch {
     repository.insert(geoFence)
+  }
+
+  fun getInitialTransitionTrigger() = when {
+    initialEventEnter.get() && initialEventDwell.get() && initialEventExit.get() -> {
+      Geofence.GEOFENCE_TRANSITION_ENTER or
+          Geofence.GEOFENCE_TRANSITION_DWELL or
+          Geofence.GEOFENCE_TRANSITION_EXIT
+    }
+    initialEventEnter.get() && initialEventDwell.get() -> {
+      Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_DWELL
+    }
+    initialEventEnter.get() && initialEventExit.get() -> {
+      Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT
+    }
+    initialEventDwell.get() && initialEventExit.get() -> {
+      Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_EXIT
+    }
+    initialEventEnter.get() -> {
+      Geofence.GEOFENCE_TRANSITION_ENTER
+    }
+    initialEventDwell.get() -> {
+      Geofence.GEOFENCE_TRANSITION_DWELL
+    }
+    initialEventExit.get() -> {
+      Geofence.GEOFENCE_TRANSITION_EXIT
+    }
+    else -> {
+      errorInInitialEvent.set(true)
+      GeofenceUtils.DEFAULT_TRIGGER
+    }
+  }
+
+  fun setInitialTransition(trigger: Int) {
+    initialTransitionTrigger = trigger
+  }
+
+  fun hasFieldsErrors(): Boolean {
+    // todo: update this
+    return errorInName.get() || errorInInitialEvent.get()
   }
 
   val allGeoFences: LiveData<List<GeofenceModel>> = repository.allGeofences.asLiveData()

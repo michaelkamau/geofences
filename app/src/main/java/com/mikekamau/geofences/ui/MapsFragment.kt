@@ -1,14 +1,15 @@
 package com.mikekamau.geofences.ui
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -18,16 +19,22 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.mikekamau.geofences.GeofencesApplication
 import com.mikekamau.geofences.R
 import com.mikekamau.geofences.data.GeofenceUtils
 import com.mikekamau.geofences.databinding.FragmentMapsBinding
+import java.util.*
 
-class MapsFragment : Fragment() {
+class MapsFragment() : Fragment() {
 
   lateinit var binding: FragmentMapsBinding
   private lateinit var map: GoogleMap
   private lateinit var geofencingClient: GeofencingClient
   private lateinit var geofenceUtils: GeofenceUtils
+
+  private val viewModel: GeofenceViewModel by activityViewModels {
+    GeofenceViewModelFactory(GeofencesApplication.getInstance().repository)
+  }
 
   private val onMapReadyCallback = OnMapReadyCallback { googleMap ->
     /**
@@ -52,10 +59,14 @@ class MapsFragment : Fragment() {
   }
 
   private val onMapLongClickListener = GoogleMap.OnMapLongClickListener { position ->
-    addMarker(position)
-    addCircle(position, 100.0)
+    viewModel.selectedPosition = position
+    updateGeofenceMarker(position, 50.0)
   }
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    geofenceUtils = GeofenceUtils(requireActivity())
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -71,14 +82,44 @@ class MapsFragment : Fragment() {
     val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
     mapFragment?.getMapAsync(onMapReadyCallback)
     geofencingClient = LocationServices.getGeofencingClient(requireActivity())
-    geofenceUtils = GeofenceUtils(requireActivity())
 
     binding.btnContinue.setOnClickListener {
       AddGeofenceFragment.newInstance().show(childFragmentManager, AddGeofenceFragment.TAG)
     }
 
+    viewModel.selectedPosition?.let { position ->
+      updateGeofenceMarker(position, viewModel.getRadius().get().toDouble())
+    }
+
   }
 
+  @SuppressLint("MissingPermission")
+  fun addGeofence(latLng: LatLng, radius: Float) {
+    val geofence = geofenceUtils.createGeofence(
+      UUID.randomUUID().toString(),
+      latLng,
+      viewModel.getRadius().get(),
+      GeofenceUtils.DEFAULT_EXPIRY_MILLIS,
+      viewModel.getInitialTransitionTrigger(),
+      GeofenceUtils.DEFAULT_LOITER_DELAY_MILLIS
+    )
+    val initialTrigger = viewModel.getInitialTransitionTrigger()
+    val geofenceRequest = geofenceUtils.getGeofencingRequest(geofence, initialTrigger)
+    val geofencePendingIntent = geofenceUtils.geofencePendingIntent
+    geofencingClient.addGeofences(geofenceRequest, geofencePendingIntent)
+      .addOnSuccessListener {
+        Log.d(TAG, "Created geofence $geofence")
+      }
+
+      .addOnFailureListener {
+        geofenceUtils.geofenceError(it)
+      }
+  }
+
+  public fun updateGeofenceMarker(position: LatLng, radius: Double) {
+    addMarker(position)
+    addCircle(position, radius)
+  }
 
   private fun addMarker(position: LatLng) {
     map.clear()
@@ -101,6 +142,19 @@ class MapsFragment : Fragment() {
   private fun getUserCurrentLocation(): LatLng {
     // todo: add proper impl
     return LatLng(-1.2811374954430768, 36.66097762870249);
+  }
+
+  companion object {
+
+    fun getInstance(context: Context): MapsFragment {
+      return MapsFragment(context)
+    }
+
+    const val TAG = "MapsFragment"
+  }
+
+  constructor(context: Context) : this() {
+    geofenceUtils = GeofenceUtils(context)
   }
 
 }

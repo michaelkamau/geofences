@@ -35,17 +35,28 @@ class AddGeofenceFragment : DialogFragment() {
     super.onViewCreated(view, savedInstanceState)
 
     binding.btnSave.setOnClickListener {
-      saveGeofence()
+      captureGeofenceFields()
+      if (viewModel.hasFieldsErrors().not()) {
+        this.dismiss()
+      }
     }
   }
 
-  private fun saveGeofence() {
+  private fun captureGeofenceFields() {
     viewModel.setName(binding.etName.text.toString())
     showNameError(viewModel.errorInName.get())
     viewModel.setRadius(binding.etRadius.text.toString())
     showRadiusError(viewModel.errorInRadius.get())
+    showInitialTriggerError(viewModel.errorInInitialEvent.get())
+    viewModel.setInitialTransition(viewModel.getInitialTransitionTrigger())
+  }
 
-
+  private fun showInitialTriggerError(hasError: Boolean) {
+    if (hasError) {
+      binding.tvErrorNoInitialTrigger.visibility = View.VISIBLE
+    } else {
+      binding.tvErrorNoInitialTrigger.visibility = View.GONE
+    }
   }
 
   private fun showRadiusError(hasError: Boolean) {

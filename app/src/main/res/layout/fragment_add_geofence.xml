@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
     <variable
       name="viewModel"
       type="com.mikekamau.geofences.ui.GeofenceViewModel" />
+
+    <import type="android.view.View"/>
 
   </data>
 
@@ -104,7 +107,8 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/spacing_medium"
           android:textSize="@dimen/text_size_medium"
-          android:text="@string/label_enter" />
+          android:text="@string/label_enter"
+          android:checked="@{viewModel.initialEventEnter}" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
           android:id="@+id/checkbox_initial_exit"
@@ -112,7 +116,8 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/spacing_medium"
           android:textSize="@dimen/text_size_medium"
-          android:text="@string/label_exit" />
+          android:text="@string/label_exit"
+          android:checked="@{viewModel.initialEventExit}" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
           android:id="@+id/checkbox_initial_dwell"
@@ -120,7 +125,19 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/spacing_medium"
           android:textSize="@dimen/text_size_medium"
-          android:text="@string/label_dwell" />
+          android:text="@string/label_dwell"
+          android:checked="@{viewModel.initialEventDwell}" />
+
+        <com.google.android.material.textview.MaterialTextView
+          android:id="@+id/tv_error_no_initial_trigger"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:text="@string/error_select_initial_trigger"
+          android:textColor="@color/red"
+          android:textSize="@dimen/text_size_small"
+          tools:visibility="visible"
+          android:visibility="@{viewModel.errorInInitialEvent == true ? View.VISIBLE : View.GONE}" />
 
         <com.google.android.material.textview.MaterialTextView
           android:id="@+id/tv_geofence_events"
