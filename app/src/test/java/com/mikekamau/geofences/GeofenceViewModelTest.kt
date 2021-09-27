@@ -31,4 +31,17 @@ class GeofenceViewModelTest {
     geofenceViewModel.setName("")
     assertTrue(geofenceViewModel.errorInName.get())
   }
+
+  @Test
+  fun `set valid radius`(){
+    geofenceViewModel.setRadius(100.0)
+    assertEquals(geofenceViewModel.getRadius().get(), 100.0,0.0)
+    assertFalse(geofenceViewModel.errorInRadius.get())
+  }
+
+  @Test
+  fun `set invalid radius`(){
+    geofenceViewModel.setRadius(0.0)
+    assertTrue(geofenceViewModel.errorInRadius.get())
+  }
 }

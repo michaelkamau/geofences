@@ -1,6 +1,7 @@
 package com.mikekamau.geofences.ui
 
 import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableDouble
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.mikekamau.geofences.data.GeofenceRepository
@@ -12,7 +13,9 @@ class GeofenceViewModel(
 ) : ViewModel() {
 
   private val name: ObservableField<String> = ObservableField()
-  public val errorInName: ObservableBoolean = ObservableBoolean()
+  val errorInName: ObservableBoolean = ObservableBoolean()
+  private val radius: ObservableDouble = ObservableDouble()
+  val errorInRadius = ObservableBoolean()
 
   fun setName(geofenceName: String) = when {
     geofenceName.isEmpty() -> {
@@ -25,6 +28,19 @@ class GeofenceViewModel(
   }
 
   fun getName() = name
+
+  fun setRadius(value: Double) = when {
+    //TODO: set proper min radius
+    value <= 0.0 -> {
+      errorInRadius.set(true)
+    }
+    else -> {
+      radius.set(value)
+      errorInRadius.set(false)
+    }
+  }
+
+  fun getRadius() = radius
 
   fun insert(geoFence: GeofenceModel) = viewModelScope.launch {
     repository.insert(geoFence)
