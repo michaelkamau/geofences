@@ -22,7 +22,7 @@ class GeofenceViewModelTest {
   @Test
   fun `set valid geofence name`() {
     geofenceViewModel.setName("Public Playground")
-    assertEquals(geofenceViewModel.getName().get(), "Public Playground")
+    assertEquals(geofenceViewModel.name.get(), "Public Playground")
     assertFalse(geofenceViewModel.errorInName.get())
   }
 
@@ -34,14 +34,20 @@ class GeofenceViewModelTest {
 
   @Test
   fun `set valid radius`(){
-    geofenceViewModel.setRadius(100.0)
+    geofenceViewModel.setRadius("100.0")
     assertEquals(geofenceViewModel.getRadius().get(), 100.0,0.0)
     assertFalse(geofenceViewModel.errorInRadius.get())
   }
 
   @Test
   fun `set invalid radius`(){
-    geofenceViewModel.setRadius(0.0)
+    geofenceViewModel.setRadius("0.0")
+    assertTrue(geofenceViewModel.errorInRadius.get())
+  }
+
+  @Test
+  fun `set null to radius`(){
+    geofenceViewModel.setRadius(null)
     assertTrue(geofenceViewModel.errorInRadius.get())
   }
 }

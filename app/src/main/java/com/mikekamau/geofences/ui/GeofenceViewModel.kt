@@ -12,13 +12,36 @@ class GeofenceViewModel(
   private val repository: GeofenceRepository
 ) : ViewModel() {
 
-  private val name: ObservableField<String> = ObservableField()
+  //==============
+  // Geofence Name
+  //==============
+  val name: ObservableField<String> = ObservableField()
   val errorInName: ObservableBoolean = ObservableBoolean()
+
+  //================
+  // Geofence Radius
+  //================
   private val radius: ObservableDouble = ObservableDouble()
   val errorInRadius = ObservableBoolean()
 
-  fun setName(geofenceName: String) = when {
-    geofenceName.isEmpty() -> {
+  //=========================
+  // Geofence Initial Events
+  //=========================
+  val initialEventEnter = ObservableBoolean()
+  val initialEventExit = ObservableBoolean()
+  val initialEventDwell = ObservableBoolean()
+  val errorInInitialEvent = ObservableBoolean()
+
+  //================
+  // Geofence Events
+  //================
+  val eventEnter = ObservableBoolean()
+  val eventExit = ObservableBoolean()
+  val eventDwell = ObservableBoolean()
+  val errorInEvent = ObservableBoolean()
+
+  fun setName(geofenceName: String?) = when {
+    geofenceName.isNullOrBlank() -> {
       errorInName.set(true)
     }
     else -> {
@@ -27,16 +50,26 @@ class GeofenceViewModel(
     }
   }
 
-  fun getName() = name
-
-  fun setRadius(value: Double) = when {
-    //TODO: set proper min radius
-    value <= 0.0 -> {
+  fun setRadius(value: String?) {
+    if (value.isNullOrBlank()) {
       errorInRadius.set(true)
-    }
-    else -> {
-      radius.set(value)
-      errorInRadius.set(false)
+      return
+    } else {
+      try {
+        val rad = value.toDouble()
+        when {
+          rad <= 0.0 -> {
+            errorInRadius.set(true)
+          }
+          else -> {
+            errorInRadius.set(false)
+            radius.set(rad)
+          }
+        }
+      } catch (e: NumberFormatException) {
+        errorInRadius.set(true)
+        return
+      }
     }
   }
 
