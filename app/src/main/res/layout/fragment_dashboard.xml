@@ -52,8 +52,8 @@
       android:layout_marginBottom="@dimen/spacing_medium"
       android:layout_alignParentBottom="true"
       android:text="@string/label_add_geofence"
-      android:textSize="@dimen/text_size_medium"
-      android:textAllCaps="false"/>
+      android:textAllCaps="false"
+      android:textSize="@dimen/text_size_medium" />
 
   </RelativeLayout>
 
