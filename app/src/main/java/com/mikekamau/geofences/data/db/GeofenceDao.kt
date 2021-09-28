@@ -4,18 +4,18 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.mikekamau.geofences.models.Geofence
+import com.mikekamau.geofences.models.GeofenceModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GeofenceDao {
 
   @Insert
-  suspend fun insertAll(vararg geofences: Geofence)
+  suspend fun insertAll(vararg geofenceModels: GeofenceModel)
 
-  @Query("SELECT * FROM Geofence ORDER BY id")
-  fun getAll(): Flow<List<Geofence>>
+  @Query("SELECT * FROM GeofenceModel ORDER BY id")
+  fun getAll(): Flow<List<GeofenceModel>>
 
   @Delete
-  suspend fun delete(vararg geofences: Geofence): Int
+  suspend fun delete(vararg geofenceModels: GeofenceModel): Int
 }

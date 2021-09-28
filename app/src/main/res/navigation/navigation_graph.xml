@@ -10,11 +10,9 @@
     android:name="com.mikekamau.geofences.ui.DashboardFragment"
     android:label="@string/label_dashboard"
     tools:layout="@layout/fragment_dashboard">
-
     <action
-      android:id="@+id/action_dest_dashboard_to_dest_maps"
-      app:destination="@id/dest_maps" />
-
+      android:id="@+id/action_dest_dashboard_to_dest_permissionFragment"
+      app:destination="@id/dest_permissionFragment" />
   </fragment>
 
   <fragment
@@ -22,5 +20,20 @@
     android:name="com.mikekamau.geofences.ui.MapsFragment"
     android:label="fragment_maps"
     tools:layout="@layout/fragment_maps" />
+
+  <fragment
+    android:id="@+id/dest_permissionFragment"
+    android:name="com.mikekamau.geofences.ui.PermissionFragment"
+    android:label="PermissionFragment"
+    tools:layout="@layout/fragment_permission">
+
+    <action
+      android:id="@+id/action_dest_permissionFragment_to_dest_maps"
+      app:destination="@id/dest_maps"
+      app:popUpTo="@layout/fragment_permission"
+      app:popUpToInclusive="true"
+      />
+
+  </fragment>
 
 </navigation>

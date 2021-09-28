@@ -13,7 +13,7 @@ import com.mikekamau.geofences.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
 
-  val geofencesViewModel: GeofenceViewModel by activityViewModels {
+  private val geofencesViewModel: GeofenceViewModel by activityViewModels {
     GeofenceViewModelFactory(GeofencesApplication.getInstance().repository)
   }
 
@@ -34,6 +34,7 @@ class DashboardFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
+
     geofencesViewModel.allGeoFences.observe(viewLifecycleOwner) { geofences ->
       if (geofences.isEmpty()) {
         binding.tvWarningNoGeofence.visibility = View.VISIBLE
@@ -43,12 +44,13 @@ class DashboardFragment : Fragment() {
     }
 
     binding.btnAddGeofence.setOnClickListener {
-      navigateToMaps()
+      navigateToPermissionFrag()
     }
   }
 
-  fun navigateToMaps() {
-    findNavController().navigate(R.id.dest_maps, null)
+
+  private fun navigateToPermissionFrag() {
+    findNavController().navigate(R.id.dest_permissionFragment, null)
   }
 
   companion object {

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.mikekamau.geofences.ui.GeofenceViewModel" />
+
+    <import type="android.view.View"/>
+
+  </data>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+          android:id="@+id/tv_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/spacing_medium"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:layout_marginEnd="@dimen/spacing_medium"
+          android:text="@string/label_name"
+          android:textColor="@color/elephant"
+          android:textSize="@dimen/text_size_medium" />
+
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/text_layout_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:layout_marginEnd="@dimen/spacing_medium"
+          app:errorEnabled="true"
+          app:errorTextColor="@color/red"
+          android:hint="@string/label_enter_geofence_name">
+
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/elephant"
+            android:singleLine="true"
+            android:text="@={viewModel.name}"
+            android:textSize="@dimen/text_size_medium"
+            android:backgroundTint="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+          android:id="@+id/tv_radius"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:layout_marginEnd="@dimen/spacing_medium"
+          android:text="@string/label_radius"
+          android:textColor="@color/elephant"
+          android:textSize="@dimen/text_size_medium" />
+
+        <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/text_layout_radius"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:layout_marginEnd="@dimen/spacing_medium"
+          app:errorEnabled="true"
+          app:errorTextColor="@color/red"
+          android:hint="@string/label_enter_geofence_radius">
+
+          <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_radius"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:textColor="@color/elephant"
+            android:singleLine="true"
+            android:text="100"
+            android:textSize="@dimen/text_size_medium"
+            android:backgroundTint="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+          android:id="@+id/tv_initial_events"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:text="@string/label_initial_geofence_events"
+          android:textColor="@color/elephant"
+          android:textSize="@dimen/text_size_medium" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+          android:id="@+id/checkbox_initial_enter"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:textSize="@dimen/text_size_medium"
+          android:text="@string/label_enter"
+          android:checked="@{viewModel.initialEventEnter}" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+          android:id="@+id/checkbox_initial_exit"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:textSize="@dimen/text_size_medium"
+          android:text="@string/label_exit"
+          android:checked="@{viewModel.initialEventExit}" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+          android:id="@+id/checkbox_initial_dwell"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:textSize="@dimen/text_size_medium"
+          android:text="@string/label_dwell"
+          android:checked="@{viewModel.initialEventDwell}" />
+
+        <com.google.android.material.textview.MaterialTextView
+          android:id="@+id/tv_error_no_initial_trigger"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:text="@string/error_select_initial_trigger"
+          android:textColor="@color/red"
+          android:textSize="@dimen/text_size_small"
+          tools:visibility="visible"
+          android:visibility="@{viewModel.errorInInitialEvent == true ? View.VISIBLE : View.GONE}" />
+
+        <com.google.android.material.textview.MaterialTextView
+          android:id="@+id/tv_geofence_events"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/spacing_medium"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:text="@string/label_geofence_events"
+          android:textColor="@color/elephant"
+          android:textSize="@dimen/text_size_medium" />
+        <com.google.android.material.checkbox.MaterialCheckBox
+          android:id="@+id/checkbox_geofence_enter"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:textSize="@dimen/text_size_medium"
+          android:text="@string/label_enter" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+          android:id="@+id/checkbox_geofence_exit"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:textSize="@dimen/text_size_medium"
+          android:text="@string/label_exit" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+          android:id="@+id/checkbox_geofence_dwell"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:textSize="@dimen/text_size_medium"
+          android:text="@string/label_dwell" />
+
+        <com.google.android.material.button.MaterialButton
+          android:id="@+id/btn_save"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/label_save"
+          android:textAllCaps="false"
+          android:textSize="@dimen/text_size_medium"
+
+          android:layout_marginBottom="@dimen/spacing_medium"
+          android:layout_marginTop="@dimen/spacing_large"
+          android:layout_marginStart="@dimen/spacing_medium"
+          android:layout_marginEnd="@dimen/spacing_medium"
+          android:paddingTop="@dimen/spacing_small"
+          android:paddingBottom="@dimen/spacing_small" />
+
+      </LinearLayout>
+
+    </RelativeLayout>
+
+  </ScrollView>
+
+</layout>

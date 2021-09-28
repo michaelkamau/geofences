@@ -7,7 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mikekamau.geofences.data.db.GeofenceDao
 import com.mikekamau.geofences.data.db.GeofenceDatabase
 import com.mikekamau.geofences.models.GeoPoint
-import com.mikekamau.geofences.models.Geofence
+import com.mikekamau.geofences.models.GeofenceModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class GeofenceDaoTest {
+class GeofenceModelDaoTest {
 
   private lateinit var geofenceDao: GeofenceDao
   private lateinit var db: GeofenceDatabase
@@ -47,7 +47,7 @@ class GeofenceDaoTest {
 
   @Test
   fun insertAndGetSingleGeofence() = runBlocking {
-    val geo = Geofence(
+    val geo = GeofenceModel(
       1,
       GeoPoint(1.2921, 36.8219),
       1631957150427,
@@ -64,7 +64,7 @@ class GeofenceDaoTest {
 
   @Test
   fun insertAndGetMultipleGeofences() = runBlocking {
-    val geo1 = Geofence(
+    val geo1 = GeofenceModel(
       1,
       GeoPoint(1.2921, 36.8219),
       1631957150427,
@@ -74,7 +74,7 @@ class GeofenceDaoTest {
       "Shopping Mall"
     )
 
-    val geo2 = Geofence(
+    val geo2 = GeofenceModel(
       2,
       GeoPoint(1.2921, 36.8219),
       1631957150427,
@@ -92,7 +92,7 @@ class GeofenceDaoTest {
 
   @Test
   fun insertAndDeleteGeofence() = runBlocking {
-    val geo = Geofence(
+    val geo = GeofenceModel(
       1,
       GeoPoint(1.2921, 36.8219),
       1631957150427,

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      tools:context=".ui.PermissionFragment">
+
+      <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/app_name"
+        android:textColor="@color/elephant"
+        android:textSize="@dimen/text_size_xlarge" />
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_warning_no_geofence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_large"
+        android:text="@string/permission_rationale_location"
+        android:textAlignment="center"
+        android:textColor="@color/elephant"
+        android:textSize="@dimen/text_size_large"
+        tools:visibility="visible" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_medium"
+        android:text="ok"
+        android:textSize="@dimen/text_size_medium" />
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:text="Cancel"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:textAlignment="center"
+        android:textColor="@color/medium_slate_blue"
+        android:textSize="@dimen/text_size_large"
+        tools:visibility="visible" />
+
+    </LinearLayout>
+  </RelativeLayout>
+
+</ScrollView>

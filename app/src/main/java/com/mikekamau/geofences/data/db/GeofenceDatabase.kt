@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.mikekamau.geofences.models.Geofence
+import com.mikekamau.geofences.models.GeofenceModel
 
 @Database(
-  entities = [Geofence::class], version = 1
+  entities = [GeofenceModel::class], version = 1
 )
 abstract class GeofenceDatabase : RoomDatabase() {
 
