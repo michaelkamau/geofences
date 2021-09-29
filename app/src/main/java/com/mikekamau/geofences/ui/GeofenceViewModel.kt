@@ -2,7 +2,6 @@ package com.mikekamau.geofences.ui
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
-import androidx.databinding.ObservableFloat
 import androidx.lifecycle.*
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.maps.model.LatLng
@@ -24,7 +23,7 @@ class GeofenceViewModel(
   //================
   // Geofence Radius
   //================
-  private val radius: ObservableFloat = ObservableFloat()
+  val radius: ObservableField<String> = ObservableField()
   val errorInRadius = ObservableBoolean()
 
   //=========================
@@ -47,7 +46,12 @@ class GeofenceViewModel(
   //================
   // Geofence Fields
   //================
+
+  // this is location that the user selected on map
   var selectedPosition: LatLng? = null
+
+  // toggle to track when user has updated geofence fields e.g. radius on AddGeofenceFragment
+  private var geofenceUpdated: MutableLiveData<Boolean?> = MutableLiveData(null)
 
 
   fun setName(geofenceName: String?) = when {
@@ -73,7 +77,7 @@ class GeofenceViewModel(
           }
           else -> {
             errorInRadius.set(false)
-            radius.set(rad)
+            radius.set(value)
           }
         }
       } catch (e: NumberFormatException) {
@@ -83,7 +87,29 @@ class GeofenceViewModel(
     }
   }
 
-  fun getRadius() = radius
+  fun getRadiusDouble(): Double {
+    return if (radius.get() != null) {
+      radius.get()!!.toDouble()
+    } else {
+      GeofenceUtils.DEFAULT_GEOFENCE_RADIUS
+    }
+  }
+
+  fun getRadiusFloat(): Float {
+    return if (radius.get() != null) {
+      radius.get()!!.toFloat()
+    } else {
+      GeofenceUtils.DEFAULT_GEOFENCE_RADIUS.toFloat()
+    }
+  }
+
+  fun setGeofenceUpdated(value: Boolean?) {
+    geofenceUpdated.value = value
+  }
+
+  fun getGeofenceUpdate(): LiveData<Boolean?> {
+    return geofenceUpdated
+  }
 
   fun insert(geoFence: GeofenceModel) = viewModelScope.launch {
     repository.insert(geoFence)

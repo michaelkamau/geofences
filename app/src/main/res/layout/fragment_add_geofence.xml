@@ -86,7 +86,7 @@
             android:inputType="numberDecimal"
             android:textColor="@color/elephant"
             android:singleLine="true"
-            android:text="100"
+            android:text="@={viewModel.radius}"
             android:textSize="@dimen/text_size_medium"
             android:backgroundTint="@color/white" />
 

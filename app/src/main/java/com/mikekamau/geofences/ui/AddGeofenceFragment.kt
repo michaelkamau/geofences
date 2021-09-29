@@ -38,10 +38,12 @@ class AddGeofenceFragment : DialogFragment() {
     binding.btnSave.setOnClickListener {
       captureGeofenceFields()
       if (viewModel.hasFieldsErrors().not()) {
+        viewModel.setGeofenceUpdated(true)
         this.dismiss()
       }
     }
   }
+
 
   private fun captureGeofenceFields() {
     // todo: split to focussed methods

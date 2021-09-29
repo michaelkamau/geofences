@@ -74,6 +74,8 @@ class GeofenceUtils(base: Context?) : ContextWrapper(base) {
 
     const val TAG = "GeofenceUtils"
 
+    const val DEFAULT_GEOFENCE_RADIUS = 50.0
+
     // 14 Days
     const val DEFAULT_EXPIRY_MILLIS = 14 * 24 * 3600L
 
