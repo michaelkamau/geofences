@@ -82,6 +82,7 @@ class MapsFragment() : Fragment() {
     val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
     mapFragment?.getMapAsync(onMapReadyCallback)
     geofencingClient = LocationServices.getGeofencingClient(requireActivity())
+    binding.viewModel = viewModel
 
     binding.btnContinue.setOnClickListener {
       AddGeofenceFragment.newInstance().show(childFragmentManager, AddGeofenceFragment.TAG)

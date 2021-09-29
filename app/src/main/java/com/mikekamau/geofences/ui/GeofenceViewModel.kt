@@ -91,26 +91,33 @@ class GeofenceViewModel(
 
   fun getInitialTransitionTrigger() = when {
     initialEventEnter.get() && initialEventDwell.get() && initialEventExit.get() -> {
+      errorInInitialEvent.set(false)
       Geofence.GEOFENCE_TRANSITION_ENTER or
           Geofence.GEOFENCE_TRANSITION_DWELL or
           Geofence.GEOFENCE_TRANSITION_EXIT
     }
     initialEventEnter.get() && initialEventDwell.get() -> {
+      errorInInitialEvent.set(false)
       Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_DWELL
     }
     initialEventEnter.get() && initialEventExit.get() -> {
+      errorInInitialEvent.set(false)
       Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT
     }
     initialEventDwell.get() && initialEventExit.get() -> {
+      errorInInitialEvent.set(false)
       Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_EXIT
     }
     initialEventEnter.get() -> {
+      errorInInitialEvent.set(false)
       Geofence.GEOFENCE_TRANSITION_ENTER
     }
     initialEventDwell.get() -> {
+      errorInInitialEvent.set(false)
       Geofence.GEOFENCE_TRANSITION_DWELL
     }
     initialEventExit.get() -> {
+      errorInInitialEvent.set(false)
       Geofence.GEOFENCE_TRANSITION_EXIT
     }
     else -> {
