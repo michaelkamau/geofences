@@ -2,7 +2,6 @@ package com.mikekamau.geofences.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -60,7 +59,11 @@ class MapsFragment() : Fragment() {
 
   private val onMapLongClickListener = GoogleMap.OnMapLongClickListener { position ->
     viewModel.selectedPosition = position
-    updateGeofenceMarker(position, 50.0)
+    if (viewModel.radius.get() != null) {
+      updateGeofenceMarker(position, viewModel.getRadiusDouble())
+    } else {
+      updateGeofenceMarker(position, GeofenceUtils.DEFAULT_GEOFENCE_RADIUS)
+    }
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,23 +85,40 @@ class MapsFragment() : Fragment() {
     val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
     mapFragment?.getMapAsync(onMapReadyCallback)
     geofencingClient = LocationServices.getGeofencingClient(requireActivity())
+    binding.viewModel = viewModel
 
     binding.btnContinue.setOnClickListener {
       AddGeofenceFragment.newInstance().show(childFragmentManager, AddGeofenceFragment.TAG)
     }
 
-    viewModel.selectedPosition?.let { position ->
-      updateGeofenceMarker(position, viewModel.getRadius().get().toDouble())
-    }
+    observeGeofenceFieldUpdates()
+  }
 
+  /**
+   * Updates the Geofence marker and circle on map after user has updated
+   * properties on AddGeofenceFragment
+   */
+  private fun observeGeofenceFieldUpdates() {
+    viewModel.getGeofenceUpdate().observe(viewLifecycleOwner) { isUpdated ->
+      if (isUpdated != null) {
+        if (isUpdated) {
+          viewModel.selectedPosition?.let { position ->
+            updateGeofenceMarker(position, viewModel.getRadiusDouble())
+            addGeofence(position)
+          }
+          viewModel.setGeofenceUpdated(null)
+        }
+      }
+
+    }
   }
 
   @SuppressLint("MissingPermission")
-  fun addGeofence(latLng: LatLng, radius: Float) {
+  fun addGeofence(latLng: LatLng) {
     val geofence = geofenceUtils.createGeofence(
       UUID.randomUUID().toString(),
       latLng,
-      viewModel.getRadius().get(),
+      viewModel.getRadiusFloat(),
       GeofenceUtils.DEFAULT_EXPIRY_MILLIS,
       viewModel.getInitialTransitionTrigger(),
       GeofenceUtils.DEFAULT_LOITER_DELAY_MILLIS
@@ -116,7 +136,7 @@ class MapsFragment() : Fragment() {
       }
   }
 
-  public fun updateGeofenceMarker(position: LatLng, radius: Double) {
+  private fun updateGeofenceMarker(position: LatLng, radius: Double) {
     addMarker(position)
     addCircle(position, radius)
   }
@@ -134,8 +154,8 @@ class MapsFragment() : Fragment() {
       center(position)
       radius(radiusMeters)
       strokeWidth(4f)
-      strokeColor(Color.RED)
-      fillColor(Color.CYAN)
+      strokeColor(resources.getColor(R.color.summer_sky, requireActivity().theme))
+      fillColor(resources.getColor(R.color.cornflower, requireActivity().theme))
     })
   }
 

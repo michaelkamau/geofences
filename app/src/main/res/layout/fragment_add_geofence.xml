@@ -86,7 +86,7 @@
             android:inputType="numberDecimal"
             android:textColor="@color/elephant"
             android:singleLine="true"
-            android:text="100"
+            android:text="@={viewModel.radius}"
             android:textSize="@dimen/text_size_medium"
             android:backgroundTint="@color/white" />
 
@@ -108,7 +108,7 @@
           android:layout_marginStart="@dimen/spacing_medium"
           android:textSize="@dimen/text_size_medium"
           android:text="@string/label_enter"
-          android:checked="@{viewModel.initialEventEnter}" />
+          android:checked="@={viewModel.initialEventEnter}" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
           android:id="@+id/checkbox_initial_exit"
@@ -117,7 +117,7 @@
           android:layout_marginStart="@dimen/spacing_medium"
           android:textSize="@dimen/text_size_medium"
           android:text="@string/label_exit"
-          android:checked="@{viewModel.initialEventExit}" />
+          android:checked="@={viewModel.initialEventExit}" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
           android:id="@+id/checkbox_initial_dwell"
@@ -126,7 +126,7 @@
           android:layout_marginStart="@dimen/spacing_medium"
           android:textSize="@dimen/text_size_medium"
           android:text="@string/label_dwell"
-          android:checked="@{viewModel.initialEventDwell}" />
+          android:checked="@={viewModel.initialEventDwell}" />
 
         <com.google.android.material.textview.MaterialTextView
           android:id="@+id/tv_error_no_initial_trigger"

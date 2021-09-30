@@ -33,22 +33,26 @@ class AddGeofenceFragment : DialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    binding.viewModel = viewModel
 
     binding.btnSave.setOnClickListener {
       captureGeofenceFields()
       if (viewModel.hasFieldsErrors().not()) {
+        viewModel.setGeofenceUpdated(true)
         this.dismiss()
       }
     }
   }
 
+
   private fun captureGeofenceFields() {
+    // todo: split to focussed methods
     viewModel.setName(binding.etName.text.toString())
     showNameError(viewModel.errorInName.get())
     viewModel.setRadius(binding.etRadius.text.toString())
     showRadiusError(viewModel.errorInRadius.get())
-    showInitialTriggerError(viewModel.errorInInitialEvent.get())
     viewModel.setInitialTransition(viewModel.getInitialTransitionTrigger())
+    showInitialTriggerError(viewModel.errorInInitialEvent.get())
   }
 
   private fun showInitialTriggerError(hasError: Boolean) {

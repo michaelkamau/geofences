@@ -19,15 +19,16 @@ class PermissionFragment : Fragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+
     if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
         requireContext(),
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        Manifest.permission.ACCESS_FINE_LOCATION
       )
     ) {
       navigateToMaps()
     } else {
       // Permission to access the location is missing. Show rationale and request permission
-      requestPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+      requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
   }
@@ -51,19 +52,19 @@ class PermissionFragment : Fragment() {
     when {
       ContextCompat.checkSelfPermission(
         requireContext(),
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        Manifest.permission.ACCESS_FINE_LOCATION
       ) == PackageManager.PERMISSION_GRANTED -> {
         // You can use the API that requires the permission.
         navigateToMaps()
       }
-      shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION) -> {
+      shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
         // In an educational UI, explain to the user why your app requires this
         // permission for a specific feature to behave as expected. In this UI,
         // include a "cancel" or "no thanks" button that allows the user to
         // continue using your app without granting the permission.
         Toast.makeText(
           requireActivity(),
-          "XXXX Please grant the application Location permission to enjoy full functionality",
+          "Please grant the application Location permission to enjoy full functionality",
           Toast.LENGTH_SHORT
         )
           .show()
@@ -72,7 +73,7 @@ class PermissionFragment : Fragment() {
         // You can directly ask for the permission.
         // The registered ActivityResultCallback gets the result of this request.
         requestPermissionLauncher.launch(
-          Manifest.permission.ACCESS_BACKGROUND_LOCATION
+          Manifest.permission.ACCESS_FINE_LOCATION
         )
       }
     }
