@@ -2,7 +2,6 @@ package com.mikekamau.geofences.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -105,6 +104,7 @@ class MapsFragment() : Fragment() {
         if (isUpdated) {
           viewModel.selectedPosition?.let { position ->
             updateGeofenceMarker(position, viewModel.getRadiusDouble())
+            addGeofence(position)
           }
           viewModel.setGeofenceUpdated(null)
         }
@@ -114,7 +114,7 @@ class MapsFragment() : Fragment() {
   }
 
   @SuppressLint("MissingPermission")
-  fun addGeofence(latLng: LatLng, radius: Float) {
+  fun addGeofence(latLng: LatLng) {
     val geofence = geofenceUtils.createGeofence(
       UUID.randomUUID().toString(),
       latLng,
